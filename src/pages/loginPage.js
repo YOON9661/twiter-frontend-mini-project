@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useCallback } from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { Form, Input, Button, Checkbox } from 'antd';
 import {
@@ -9,8 +10,19 @@ import {
 import { Link } from "react-router-dom";
 
 import MainTemplate from "./template/mainTemplate";
+import { loginRequest } from "../redux/auth/login";
+import useInput from "../lib/useInput";
 
 const LoginPage = () => {
+    const dispatch = useDispatch();
+
+    const [email, onChangeEmail] = useInput("");
+    const [password, onChangePassword] = useInput("");
+
+    const onSubmitLogin = useCallback(() => {
+        dispatch(loginRequest({ email, password }));
+    }, [dispatch, email, password]);
+
     return (
         <>
             <MainTemplate>
@@ -18,13 +30,14 @@ const LoginPage = () => {
                     <h3 style={{ textAlign: 'center', margin: '30px' }}>
                         트위터 로그인 <LoginOutlined />
                     </h3>
-                    <Form>
+                    <Form onFinish={onSubmitLogin}>
                         <Form.Item
-                            rules={[{ required: true, message: 'Please input your Username!' }]}
+                            rules={[{ required: true, message: 'Please input your Email!' }]}
                         >
                             <Input
                                 prefix={<UserOutlined />}
-                                placeholder="Username"
+                                placeholder="Email"
+                                onChange={onChangeEmail}
                             />
                         </Form.Item>
 
@@ -35,6 +48,7 @@ const LoginPage = () => {
                                 prefix={<LockOutlined />}
                                 type="password"
                                 placeholder="Password"
+                                onChange={onChangePassword}
                             />
                         </Form.Item>
 

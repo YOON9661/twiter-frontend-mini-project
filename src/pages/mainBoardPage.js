@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState, useCallback } from "react";
 import styled from "styled-components"
-import { Card, Avatar } from 'antd';
+import { Card, Avatar, Image } from 'antd';
 import {
     HeartOutlined,
     EllipsisOutlined,
@@ -9,10 +9,17 @@ import {
 } from '@ant-design/icons';
 
 import MainTemplate from "./template/mainTemplate";
+import CommentBlock from '../components/mainBoard/comment';
 
 const { Meta } = Card;
 
 const MainBoardPage = () => {
+
+    const [watchComment, setWatchComment] = useState(false);
+    const onOpenCommentBlock = useCallback(() => {
+        setWatchComment(!watchComment);
+    }, [watchComment]);
+
     return (
         <>
             <MainTemplate>
@@ -32,7 +39,7 @@ const MainBoardPage = () => {
                         actions={[
                             <SettingOutlined />,
                             <HeartOutlined />,
-                            <CommentOutlined />,
+                            <CommentOutlined onClick={onOpenCommentBlock} />,
                             <EllipsisOutlined />
                         ]}
                     >
@@ -41,16 +48,18 @@ const MainBoardPage = () => {
                             title="Card title"
                             description={
                                 <>
-                                    <img
-                                        style={{ margin: '10px', width: '80%' }}
-                                        alt="example"
-                                        src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-                                    />
+                                    <div style={{ margin: '20px' }}>
+                                        <Image
+                                            width={200}
+                                            src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+                                        />
+                                    </div>
                                     <div>즐거운 하루</div>
                                 </>
                             }
                         />
                     </Card>
+                    {watchComment && <CommentBlock />}
 
                     <Card
                         style={{
@@ -80,7 +89,6 @@ const MainBoardPage = () => {
                             }
                         />
                     </Card>
-
                 </MainBoardTemplate>
             </MainTemplate>
         </>

@@ -24,10 +24,7 @@ const MainTemplate = ({ children }) => {
                         twiter <TwitterOutlined />
                     </Link>
                 </Menu.Item>
-                <Menu.Item style={{
-                    marginLeft: '100px',
-                    marginRight: '200px'
-                }}>
+                <Menu.Item>
                     <Input.Search
                         style={{ marginTop: '7px', width: '400px' }}
                     />
