@@ -18,7 +18,7 @@ export default function* loginSaga() {
 }
 // login
 function loginAPI(data) {
-    return console.log(data);
+    return axios.post("/user/login", data);
 }
 function* login(action) {
     try {

@@ -14,6 +14,7 @@ function App() {
       <Route component={MainBoardPage} path="/" exact />
       <Route component={LoginPage} path="/login" exact />
       <Route component={RegisterPage} path="/register" exact />
+      <Route component={ProfilePage} path="/profile" exact />
       <Route component={ProfilePage} path="/profile/:id" exact />
       <Route component={UploadPage} path="/upload" exact />
     </>

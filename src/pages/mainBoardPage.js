@@ -4,8 +4,8 @@ import { Card, Avatar, Image } from 'antd';
 import {
     HeartOutlined,
     EllipsisOutlined,
-    SettingOutlined
-    , CommentOutlined
+    RetweetOutlined,
+    CommentOutlined
 } from '@ant-design/icons';
 
 import MainTemplate from "./template/mainTemplate";
@@ -37,7 +37,7 @@ const MainBoardPage = () => {
                             marginBottom: '30px'
                         }}
                         actions={[
-                            <SettingOutlined />,
+                            <RetweetOutlined />,
                             <HeartOutlined />,
                             <CommentOutlined onClick={onOpenCommentBlock} />,
                             <EllipsisOutlined />
@@ -68,7 +68,7 @@ const MainBoardPage = () => {
                             marginBottom: '30px'
                         }}
                         actions={[
-                            <SettingOutlined />,
+                            <RetweetOutlined />,
                             <HeartOutlined />,
                             <CommentOutlined />,
                             <EllipsisOutlined />
