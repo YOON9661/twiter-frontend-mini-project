@@ -14,7 +14,10 @@ export const POST_PREVIEW_INITIALIZE = "POST_PREVIEW_INITIALIZE";
 
 // aciton 생성함수
 export const postUploadRequest = createAction(POST_UPLOAD_REQUEST, data => data);
+export const postUploadInitializeRequest = createAction(POST_UPLOAD_INITIALIZE);
+
 export const postPreviewRequest = createAction(POST_PREVIEW_REQUEST, data => data);
+export const postPreviewInitializeRequest = createAction(POST_PREVIEW_INITIALIZE);
 
 
 // initialState

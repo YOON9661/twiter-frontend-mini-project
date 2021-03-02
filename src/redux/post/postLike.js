@@ -28,34 +28,48 @@ const initialState = {
     likeDeleteError: null
 }
 
-// login reducer
-const postUpload = handleActions(
+const postLike = handleActions(
     {
-        // login
-        [POST_UPLOAD_REQUEST]: (state, action) => (
+        // postlike
+        [POST_LIKE_REQUEST]: (state, action) => (
             produce(state, draft => {
-                draft.isPostUploading = true;
+                draft.isLiking = true;
             })),
-        [POST_UPLOAD_SUCCESS]: (state, { payload: postUploadData }) => (
+        [POST_LIKE_SUCCESS]: (state, { payload: likeData }) => (
             produce(state, draft => {
-                draft.isPostUploading = false;
-                draft.isPostUploaded = true;
-                draft.postUploadData = postUploadData;
-                draft.postUploadError = null;
+                draft.isLiking = false;
+                draft.likeSuccess = true;
+                draft.likeData = likeData
+                draft.likeError = null;
             })),
-        [POST_UPLOAD_FAILURE]: (state, { payload: postUploadError }) => (
+        [POST_LIKE_FAILURE]: (state, { payload: likeError }) => (
             produce(state, draft => {
-                draft.isPostUploading = false;
-                draft.postUploadError = postUploadError;
+                draft.isLiking = false;
+                draft.likeError = likeError;
             })),
-        [POST_UPLOAD_INITIALIZE]: (state, action) => (
+
+        // postLikeDelete
+        [POST_LIKE_DELETE_REQUEST]: (state, action) => (
             produce(state, draft => {
-                draft.isPostUploaded = false;
-                draft.postUploadData = null;
-            }))
+                draft.isDeletingLike = true;
+            })),
+        [POST_LIKE_DELETE_SUCCESS]: (state, { payload: likeDeleteData }) => (
+            produce(state, draft => {
+                draft.isDeletingLike = false;
+                draft.deleteLikeSuccess = true;
+                draft.likeDeleteData = likeDeleteData;
+                draft.likeDeleteError = null;
+            })),
+        [POST_LIKE_DELETE_FAILURE]: (state, { payload: likeDeleteError }) => (
+            produce(state, draft => {
+                draft.isDeletingLike = false;
+                draft.likeDeleteError = likeDeleteError;
+            })),
+
+
 
     },
     initialState
 );
 
-export default postUpload;
+export default postLike;
