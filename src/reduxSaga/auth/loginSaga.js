@@ -30,7 +30,7 @@ function* login(action) {
     } catch (err) {
         yield put({
             type: LOGIN_FAILURE,
-            payload: "err" // err.response.data
+            payload: err.response.data
         })
     }
 }

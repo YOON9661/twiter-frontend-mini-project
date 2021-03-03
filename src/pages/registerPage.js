@@ -22,7 +22,7 @@ const RegisterPage = () => {
     const onChangePasswordConfirm = useCallback((e) => {
         setPasswordConfirm(e.target.value);
         setConfirmError(password !== e.target.value);
-    }, [password, passwordConfirm, confirmError]);
+    }, [password]);
 
     // submit
     const onSubmit = useCallback(() => {
@@ -31,7 +31,7 @@ const RegisterPage = () => {
         } else {
             dispatch(registerRequest({ email, nickname, password }));
         }
-    }, [dispatch, email, nickname, password, confirmError]);
+    }, [dispatch, email, nickname, password, passwordConfirm]);
 
     return (
         <>

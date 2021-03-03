@@ -11,6 +11,7 @@ export const LOGOUT_FAILURE = "LOGOUT_FAILURE";
 
 // aciton 생성함수
 export const loginRequest = createAction(LOGIN_REQUEST, data => data);
+export const logoutRequest = createAction(LOGOUT_REQUEST);
 
 // {
 //     type: 'LOGIN_REQUEST',
@@ -40,17 +41,17 @@ const login = handleActions(
             produce(state, draft => {
                 draft.isLoggingIn = true;
             })),
-        [LOGIN_SUCCESS]: (state, { data }) => (
+        [LOGIN_SUCCESS]: (state, { payload: loginData }) => (
             produce(state, draft => {
                 draft.isLoggingIn = false;
                 draft.isLoggedIn = true;
-                draft.loginData = data;
+                draft.loginData = loginData;
                 draft.loginDataError = null;
             })),
-        [LOGIN_FAILURE]: (state, { data }) => (
+        [LOGIN_FAILURE]: (state, { payload: loginDataError }) => (
             produce(state, draft => {
                 draft.isLoggingIn = false;
-                draft.loginDataError = data;
+                draft.loginDataError = loginDataError;
             })),
 
         // logout
@@ -62,6 +63,7 @@ const login = handleActions(
             produce(state, draft => {
                 draft.isLoggingOut = false;
                 draft.isLoggedOut = true;
+                draft.isLoggedIn = false;
                 draft.loginData = null;
                 draft.logoutError = null;
             })),

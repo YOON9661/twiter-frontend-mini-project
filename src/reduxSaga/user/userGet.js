@@ -13,7 +13,7 @@ export default function* userGetSaga() {
     ])
 }
 
-// login
+// getUser -- profile에 필요
 function getUserAPI(data) {
     return axios.post("/user/:id", data);
 }

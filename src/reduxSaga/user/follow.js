@@ -1,6 +1,14 @@
 import { all, fork, put, takeLatest, call } from "redux-saga/effects";
 import axios from "axios";
 
+import {
+    FOLLOW_REQUEST,
+    FOLLOW_SUCCESS,
+    FOLLOW_FAILURE,
+    UNFOLLOW_REQUEST,
+    UNFOLLOW_SUCCESS,
+    UNFOLLOW_FAILURE
+} from "../../redux/user/follow";
 
 export default function* followSaga() {
     yield all([
@@ -17,18 +25,18 @@ function* follow(action) {
     try {
         const result = yield call(followAPI, action.payload);
         yield put({
-            type: REGISTER_SUCCESS,
+            type: FOLLOW_SUCCESS,
             payload: result.data
         })
     } catch (err) {
         yield put({
-            type: REGISTER_FAILURE,
+            type: FOLLOW_FAILURE,
             payload: err.response.data
         })
     }
 }
 function* watchFollow() {
-    yield takeLatest(REGISTER_REQUEST, follow);
+    yield takeLatest(FOLLOW_REQUEST, follow);
 }
 
 // unfollow
@@ -39,16 +47,16 @@ function* unfollow(action) {
     try {
         const result = yield call(unfollowAPI, action.payload);
         yield put({
-            type: REGISTER_SUCCESS,
+            type: UNFOLLOW_SUCCESS,
             payload: result.data
         })
     } catch (err) {
         yield put({
-            type: REGISTER_FAILURE,
+            type: UNFOLLOW_FAILURE,
             payload: err.response.data
         })
     }
 }
 function* watchUnfollow() {
-    yield takeLatest(REGISTER_REQUEST, unfollow);
+    yield takeLatest(UNFOLLOW_REQUEST, unfollow);
 }

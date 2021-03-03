@@ -14,8 +14,8 @@ export default function* postRetweetSaga() {
 }
 
 // login
-function postRetweetAPI(data) {
-    return axios.post("/retweet/:id", data);
+function postRetweetAPI(id) {
+    return axios.post(`/retweet/${id}`);
 }
 function* postRetweet(action) {
     try {

@@ -15,6 +15,7 @@ export default function* registerSaga() {
 
 // login
 function registerAPI(data) {
+    console.log(data);
     return axios.post("/user/register", data);
 }
 function* register(action) {

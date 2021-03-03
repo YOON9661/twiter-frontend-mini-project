@@ -12,7 +12,7 @@ export const COMMENT_LIKE_DELETE_FAILURE = "COMMENT_LIKE_DELETE_FAILURE";
 
 
 // aciton 생성함수
-export const commentLikeRequest = createAction(POST_COMMENT_LIKE_REQUEST, data => data);
+export const commentLikeRequest = createAction(COMMENT_LIKE_REQUEST, data => data);
 export const commentLikeDeleteRequest = createAction(COMMENT_LIKE_DELETE_REQUEST, data => data);
 
 

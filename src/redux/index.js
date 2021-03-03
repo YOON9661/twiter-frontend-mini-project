@@ -24,7 +24,6 @@ const rootReducer = combineReducers({
     register,
     getUser,
     follow,
-    // post
     getPosts,
     postUpload,
     postUd,

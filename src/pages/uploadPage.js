@@ -1,4 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { withRouter } from "react-router-dom";
+// import { useDispatch } from "react-redux";
 import { Tabs } from 'antd';
 import { DiffOutlined } from "@ant-design/icons";
 import styled from "styled-components";
@@ -6,10 +9,22 @@ import styled from "styled-components";
 import MainTemplate from "./template/mainTemplate";
 import PeedUpload from "../components/upload/peedUpload";
 import StoryUpload from "../components/upload/storyUpload";
+import { postUploadInitializeRequest } from "../redux/post/postUpload";
+
 
 const { TabPane } = Tabs;
 
-const UploadPage = () => {
+const UploadPage = ({ history }) => {
+    const dispatch = useDispatch();
+
+    const { postUploadData } = useSelector(state => state.postUpload);
+
+    useEffect(() => {
+        if (postUploadData) {
+            dispatch(postUploadInitializeRequest());
+            history.push("/");
+        }
+    }, [dispatch, postUploadData, history]);
 
     return (
         <>
@@ -32,7 +47,7 @@ const UploadPage = () => {
     );
 }
 
-export default UploadPage;
+export default withRouter(UploadPage);
 
 const UploadWrapper = styled.div`
     width: 800px;

@@ -64,10 +64,7 @@ const postLike = handleActions(
             produce(state, draft => {
                 draft.isDeletingLike = false;
                 draft.likeDeleteError = likeDeleteError;
-            })),
-
-
-
+            }))
     },
     initialState
 );

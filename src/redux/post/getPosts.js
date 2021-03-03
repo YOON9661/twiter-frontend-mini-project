@@ -14,7 +14,7 @@ export const getPostsRequest = createAction(GET_POSTS_REQUEST, data => data);
 const initialState = {
     isGettingPosts: false,
     isPostsGetted: false,
-    postsData: null,
+    postsData: [],
     postsDataError: null
 }
 

@@ -5,7 +5,7 @@ import {
     GET_POSTS_REQUEST,
     GET_POSTS_SUCCESS,
     GET_POSTS_FAILURE
-} from "../../redux/post/"
+} from "../../redux/post/getPosts"
 
 export default function* getPostsSaga() {
     yield all([
@@ -14,12 +14,12 @@ export default function* getPostsSaga() {
 }
 
 // login
-function uploadAPI() {
-    return axios.post("/post");
+function getPostsAPI() {
+    return axios.get("/post");
 }
 function* getPosts(action) {
     try {
-        const result = yield call(uploadAPI);
+        const result = yield call(getPostsAPI);
         yield put({
             type: GET_POSTS_SUCCESS,
             payload: result.data

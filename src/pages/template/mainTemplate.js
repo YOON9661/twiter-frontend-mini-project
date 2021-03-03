@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useCallback } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { withRouter } from "react-router-dom";
 import "antd/dist/antd.css";
 import { Menu, Input } from "antd";
 import {
@@ -8,7 +10,18 @@ import {
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-const MainTemplate = ({ children }) => {
+import { logoutRequest } from "../../redux/auth/login";
+
+const MainTemplate = ({ children, history }) => {
+    const dispatch = useDispatch();
+
+    const onClickLogout = useCallback(() => {
+        dispatch(logoutRequest());
+        history.push("/login");
+    }, [dispatch, history]);
+
+    const { isLoggedIn } = useSelector(state => state.login);
+
     return (
         <>
             <Menu
@@ -30,9 +43,15 @@ const MainTemplate = ({ children }) => {
                     />
                 </Menu.Item>
                 <Menu.Item>
-                    <Link to="/login">
-                        login
-                    </Link>
+                    {isLoggedIn ? (
+                        <div onClick={onClickLogout}>
+                            logout
+                        </div>
+                    ) : (
+                        <Link to="/login">
+                            login
+                        </Link>
+                    )}
                 </Menu.Item>
                 <Menu.Item>
                     <Link to="/register">
@@ -60,7 +79,7 @@ const MainTemplate = ({ children }) => {
     );
 }
 
-export default MainTemplate;
+export default withRouter(MainTemplate);
 
 const ChildrunWrapper = styled.div`
 

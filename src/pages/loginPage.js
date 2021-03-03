@@ -1,5 +1,6 @@
-import React, { useCallback } from "react";
-import { useDispatch } from "react-redux";
+import React, { useCallback, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { withRouter } from "react-router-dom";
 import styled from "styled-components";
 import { Form, Input, Button, Checkbox } from 'antd';
 import {
@@ -13,8 +14,10 @@ import MainTemplate from "./template/mainTemplate";
 import { loginRequest } from "../redux/auth/login";
 import useInput from "../lib/useInput";
 
-const LoginPage = () => {
+const LoginPage = ({ history }) => {
     const dispatch = useDispatch();
+
+    const { isLoggedIn } = useSelector(state => state.login);
 
     const [email, onChangeEmail] = useInput("");
     const [password, onChangePassword] = useInput("");
@@ -22,6 +25,12 @@ const LoginPage = () => {
     const onSubmitLogin = useCallback(() => {
         dispatch(loginRequest({ email, password }));
     }, [dispatch, email, password]);
+
+    useEffect(() => {
+        if (isLoggedIn) {
+            history.push("/");
+        }
+    }, [isLoggedIn, history]);
 
     return (
         <>
@@ -73,7 +82,7 @@ const LoginPage = () => {
     );
 }
 
-export default LoginPage;
+export default withRouter(LoginPage);
 
 const LoginTemplate = styled.div`
     width: 400px;

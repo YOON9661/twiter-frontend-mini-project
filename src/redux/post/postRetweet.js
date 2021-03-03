@@ -9,7 +9,6 @@ export const POST_RETWEET_FAILURE = "POST_RETWEET_FAILURE";
 // aciton 생성함수
 export const postRetweetRequest = createAction(POST_RETWEET_REQUEST, data => data);
 
-
 // initialState
 const initialState = {
     isRetweetingPost: false,

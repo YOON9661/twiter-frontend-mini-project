@@ -1,24 +1,26 @@
-import React, { useState, useCallback } from "react";
+import React, { useEffect } from "react";
+import { withRouter } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components"
-import { Card, Avatar, Image } from 'antd';
-import {
-    HeartOutlined,
-    EllipsisOutlined,
-    RetweetOutlined,
-    CommentOutlined
-} from '@ant-design/icons';
 
 import MainTemplate from "./template/mainTemplate";
-import CommentBlock from '../components/mainBoard/comment';
+import CardContainer from "../components/mainBoard/cardContainer";
+import { getPostsRequest } from "../redux/post/getPosts";
 
-const { Meta } = Card;
+const MainBoardPage = ({ history }) => {
+    const dispatch = useDispatch();
 
-const MainBoardPage = () => {
+    const { postsData } = useSelector(state => state.getPosts);
+    const { isLoggedIn } = useSelector(state => state.login);
 
-    const [watchComment, setWatchComment] = useState(false);
-    const onOpenCommentBlock = useCallback(() => {
-        setWatchComment(!watchComment);
-    }, [watchComment]);
+    // login 한 사람만 입장 가능..
+    useEffect(() => {
+        if (isLoggedIn === false) {
+            history.push("/login");
+        } else {
+            dispatch(getPostsRequest());
+        }
+    }, [dispatch, isLoggedIn, history])
 
     return (
         <>
@@ -30,72 +32,27 @@ const MainBoardPage = () => {
                         </div>
                     </StoryWrapper>
 
-                    <Card
-                        style={{
-                            width: '100%',
-                            marginTop: '30px',
-                            marginBottom: '30px'
-                        }}
-                        actions={[
-                            <RetweetOutlined />,
-                            <HeartOutlined />,
-                            <CommentOutlined onClick={onOpenCommentBlock} />,
-                            <EllipsisOutlined />
-                        ]}
-                    >
-                        <Meta
-                            avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                            title="Card title"
-                            description={
-                                <>
-                                    <div style={{ margin: '20px' }}>
-                                        <Image
-                                            width={200}
-                                            src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
-                                        />
-                                    </div>
-                                    <div>즐거운 하루</div>
-                                </>
-                            }
+                    {/* cardContainer map fucntion required */}
+                    {postsData.map(postData => (
+                        <CardContainer
+                            key={postData.id}
+                            PostId={postData.id}
+                            UserId={postData.UserId}
+                            UserNick={postData.User?.nickname}
+                            content={postData.content}
+                            postLikers={postData.PostLikers}
+                            images={postData.Images}
+                            Retweet={postData.Retweet}
                         />
-                    </Card>
-                    {watchComment && <CommentBlock />}
+                    ))}
 
-                    <Card
-                        style={{
-                            width: '100%',
-                            marginTop: '30px',
-                            marginBottom: '30px'
-                        }}
-                        actions={[
-                            <RetweetOutlined />,
-                            <HeartOutlined />,
-                            <CommentOutlined />,
-                            <EllipsisOutlined />
-                        ]}
-                    >
-                        <Meta
-                            avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                            title="Card title"
-                            description={
-                                <>
-                                    <img
-                                        style={{ margin: '10px', width: '80%' }}
-                                        alt="example"
-                                        src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-                                    />
-                                    <div>즐거운 하루</div>
-                                </>
-                            }
-                        />
-                    </Card>
                 </MainBoardTemplate>
             </MainTemplate>
         </>
     );
 }
 
-export default MainBoardPage;
+export default withRouter(MainBoardPage);
 
 const MainBoardTemplate = styled.div`
     width: 500px;
