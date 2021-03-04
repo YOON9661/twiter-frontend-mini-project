@@ -11,13 +11,13 @@ import {
 import { Link } from "react-router-dom";
 
 import MainTemplate from "./template/mainTemplate";
-import { loginRequest } from "../redux/auth/login";
+import { loginRequest } from "../redux/userRedux";
 import useInput from "../lib/useInput";
 
 const LoginPage = ({ history }) => {
     const dispatch = useDispatch();
 
-    const { isLoggedIn } = useSelector(state => state.login);
+    const { isLoggedIn } = useSelector(state => state.userReducer);
 
     const [email, onChangeEmail] = useInput("");
     const [password, onChangePassword] = useInput("");

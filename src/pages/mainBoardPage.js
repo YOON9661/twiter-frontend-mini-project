@@ -5,13 +5,13 @@ import styled from "styled-components"
 
 import MainTemplate from "./template/mainTemplate";
 import CardContainer from "../components/mainBoard/cardContainer";
-import { getPostsRequest } from "../redux/post/getPosts";
+import { getPostsRequest } from "../redux/postRedux";
 
 const MainBoardPage = ({ history }) => {
     const dispatch = useDispatch();
 
-    const { postsData } = useSelector(state => state.getPosts);
-    const { isLoggedIn } = useSelector(state => state.login);
+    const { postsData } = useSelector(state => state.postReducer);
+    const { isLoggedIn } = useSelector(state => state.userReducer);
 
     // login 한 사람만 입장 가능..
     useEffect(() => {

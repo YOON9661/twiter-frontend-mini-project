@@ -7,14 +7,12 @@ import { HeartOutlined } from "@ant-design/icons"
 
 import useInput from "../../lib/useInput"
 import {
+    commentLikeRequest,
+    commentLikeDeleteRequest,
     postCommentRequest,
     // postCommentDeleteRequest,
     // postCommentUpdateRequest
-} from "../../redux/post/postCommentCrud";
-import {
-    commentLikeRequest,
-    commentLikeDeleteRequest
-} from "../../redux/post/postCommentLike";
+} from "../../redux/postRedux";
 
 
 const { TextArea } = Input;
@@ -25,7 +23,7 @@ const CommentBlock = ({ Comments, PostId }) => {
     const dispatch = useDispatch();
 
     // mydata
-    const { loginData } = useSelector(state => state.login);
+    const { loginData } = useSelector(state => state.userReducer);
     const myId = loginData?.id;
 
     // 댓글 생성

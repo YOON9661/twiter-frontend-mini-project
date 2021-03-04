@@ -15,11 +15,9 @@ import {
 import CommentBlock from "./comment";
 import {
     postLikeRequest,
-    postLikeDeleteRequest
-} from "../../redux/post/postLike";
-import {
+    postLikeDeleteRequest,
     postRetweetRequest
-} from "../../redux/post/postRetweet";
+} from "../../redux/postRedux";
 
 
 // start
@@ -29,7 +27,7 @@ const CardContainer = ({
     const dispatch = useDispatch();
 
     // myData
-    const { loginData } = useSelector(state => state.login);
+    const { loginData } = useSelector(state => state.userReducer);
     ; const myId = loginData?.id
 
     // like update

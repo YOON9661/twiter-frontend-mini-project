@@ -5,7 +5,7 @@ import {
     POST_PREVIEW_REQUEST,
     POST_PREVIEW_SUCCESS,
     POST_PREVIEW_FAILURE
-} from "../../redux/post/postUpload";
+} from "../../redux/postRedux";
 
 export default function* imagePreviewSaga() {
     yield all([

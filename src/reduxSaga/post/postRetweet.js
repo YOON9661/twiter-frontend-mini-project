@@ -5,7 +5,7 @@ import {
     POST_RETWEET_REQUEST,
     POST_RETWEET_SUCCESS,
     POST_RETWEET_FAILURE
-} from "../../redux/post/postRetweet";
+} from "../../redux/postRedux";
 
 export default function* postRetweetSaga() {
     yield all([

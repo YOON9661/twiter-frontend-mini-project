@@ -5,7 +5,7 @@ import {
     POST_UPLOAD_REQUEST,
     POST_UPLOAD_SUCCESS,
     POST_UPLOAD_FAILURE
-} from "../../redux/post/postUpload";
+} from "../../redux/postRedux";
 
 export default function* uploadSaga() {
     yield all([

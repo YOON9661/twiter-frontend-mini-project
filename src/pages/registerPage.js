@@ -6,7 +6,7 @@ import { FormOutlined } from "@ant-design/icons";
 
 import useInput from "../lib/useInput";
 import MainTemplate from "./template/mainTemplate";
-import { registerRequest } from "../redux/auth/register";
+import { registerRequest } from "../redux/userRedux";
 
 const RegisterPage = () => {
     const dispatch = useDispatch();

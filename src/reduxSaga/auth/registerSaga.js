@@ -5,7 +5,7 @@ import {
     REGISTER_REQUEST,
     REGISTER_FAILURE,
     REGISTER_SUCCESS
-} from "../../redux/auth/register"
+} from "../../redux/userRedux"
 
 export default function* registerSaga() {
     yield all([

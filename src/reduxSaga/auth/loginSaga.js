@@ -8,7 +8,7 @@ import {
     LOGOUT_REQUEST,
     LOGOUT_SUCCESS,
     LOGOUT_FAILURE
-} from "../../redux/auth/login";
+} from "../../redux/userRedux";
 
 export default function* loginSaga() {
     yield all([

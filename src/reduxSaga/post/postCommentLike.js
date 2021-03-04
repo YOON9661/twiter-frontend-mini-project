@@ -8,7 +8,7 @@ import {
     COMMENT_LIKE_DELETE_REQUEST,
     COMMENT_LIKE_DELETE_SUCCESS,
     COMMENT_LIKE_DELETE_FAILURE
-} from "../../redux/post/postCommentLike";
+} from "../../redux/postRedux";
 
 
 export default function* postCommentLikeSaga() {

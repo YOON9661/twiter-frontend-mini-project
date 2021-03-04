@@ -9,7 +9,7 @@ import styled from "styled-components";
 import MainTemplate from "./template/mainTemplate";
 import PeedUpload from "../components/upload/peedUpload";
 import StoryUpload from "../components/upload/storyUpload";
-import { postUploadInitializeRequest } from "../redux/post/postUpload";
+import { postUploadInitializeRequest } from "../redux/postRedux";
 
 
 const { TabPane } = Tabs;
@@ -17,7 +17,7 @@ const { TabPane } = Tabs;
 const UploadPage = ({ history }) => {
     const dispatch = useDispatch();
 
-    const { postUploadData } = useSelector(state => state.postUpload);
+    const { postUploadData } = useSelector(state => state.postReducer);
 
     useEffect(() => {
         if (postUploadData) {

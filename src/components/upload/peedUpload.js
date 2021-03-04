@@ -9,9 +9,10 @@ import { Form, Input, Button } from 'antd';
 import useInput from "../../lib/useInput";
 import {
     postUploadRequest,
-    postPreviewRequest
-} from "../../redux/post/postUpload";
-import { postPreviewInitializeRequest } from "../../redux/post/postUpload";
+    postPreviewRequest,
+    postPreviewInitializeRequest
+} from "../../redux/postRedux";
+
 
 
 const PeedUpload = () => {

@@ -11,7 +11,7 @@ import {
     POST_COMMENT_DELETE_REQUEST,
     POST_COMMENT_DELETE_SUCCESS,
     POST_COMMENT_DELETE_FAILURE
-} from "../../redux/post/postCommentCrud";
+} from "../../redux/postRedux";
 
 
 export default function* postCommentCrudSaga() {

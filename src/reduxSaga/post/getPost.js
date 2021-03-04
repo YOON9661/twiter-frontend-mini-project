@@ -5,7 +5,7 @@ import {
     GET_POSTS_REQUEST,
     GET_POSTS_SUCCESS,
     GET_POSTS_FAILURE
-} from "../../redux/post/getPosts"
+} from "../../redux/postRedux"
 
 export default function* getPostsSaga() {
     yield all([

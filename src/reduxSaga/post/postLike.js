@@ -8,7 +8,7 @@ import {
     POST_LIKE_DELETE_REQUEST,
     POST_LIKE_DELETE_SUCCESS,
     POST_LIKE_DELETE_FAILURE
-} from "../../redux/post/postLike";
+} from "../../redux/postRedux";
 
 export default function* postLikeSaga() {
     yield all([

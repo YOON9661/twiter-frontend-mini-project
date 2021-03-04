@@ -5,7 +5,7 @@ import {
     GET_USER_REQUEST,
     GET_USER_SUCCESS,
     GET_USER_FAILURE
-} from "../../redux/user/getUser";
+} from "../../redux/userRedux";
 
 export default function* userGetSaga() {
     yield all([

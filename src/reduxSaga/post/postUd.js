@@ -8,7 +8,7 @@ import {
     POST_DELETE_REQUEST,
     POST_DELETE_SUCCESS,
     POST_DELETE_FAILURE
-} from "../../redux/post/postUd";
+} from "../../redux/postRedux";
 
 export default function* postUdSaga() {
     yield all([

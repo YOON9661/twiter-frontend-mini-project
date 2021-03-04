@@ -8,7 +8,7 @@ import {
     UNFOLLOW_REQUEST,
     UNFOLLOW_SUCCESS,
     UNFOLLOW_FAILURE
-} from "../../redux/user/follow";
+} from "../../redux/userRedux";
 
 export default function* followSaga() {
     yield all([

@@ -10,7 +10,7 @@ import {
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-import { logoutRequest } from "../../redux/auth/login";
+import { logoutRequest } from "../../redux/userRedux";
 
 const MainTemplate = ({ children, history }) => {
     const dispatch = useDispatch();
@@ -20,7 +20,7 @@ const MainTemplate = ({ children, history }) => {
         history.push("/login");
     }, [dispatch, history]);
 
-    const { isLoggedIn } = useSelector(state => state.login);
+    const { isLoggedIn } = useSelector(state => state.userReducer);
 
     return (
         <>
