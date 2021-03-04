@@ -11,6 +11,8 @@ import {
     postUploadRequest,
     postPreviewRequest
 } from "../../redux/post/postUpload";
+import { postPreviewInitializeRequest } from "../../redux/post/postUpload";
+
 
 const PeedUpload = () => {
     const dispatch = useDispatch();
@@ -26,6 +28,11 @@ const PeedUpload = () => {
         dispatch(postPreviewRequest(formData));
     }, [dispatch]);
     const { postPreviewData } = useSelector(state => state.postUpload);
+    // preview delete
+    const onClickPreviewDelete = useCallback(() => {
+        dispatch(postPreviewInitializeRequest());
+    }, [dispatch]);
+
     // description
     const [description, onChangeDescription] = useInput("");
 
@@ -46,11 +53,22 @@ const PeedUpload = () => {
             <PeedUploadBlock>
                 <Form encType="multipart/form-data" onFinish={onSubmit}>
                     <Form.Item>
-                        <img
-                            style={{ width: '500px' }}
-                            src={postPreviewData?.url || null}
-                            alt={postPreviewData?.url || null}
-                        />
+                        {postPreviewData &&
+                            <div>
+                                <img
+                                    style={{ width: '500px' }}
+                                    src={postPreviewData?.url || null}
+                                    alt={postPreviewData?.url || null}
+                                />
+                                <div style={{ textAlign: 'center' }}>
+                                    <Button
+                                        onClick={onClickPreviewDelete}
+                                        style={{ color: 'red' }}
+                                    >
+                                        삭제
+                                    </Button>
+                                </div>
+                            </div>}
                         <input
                             name="img"
                             type="file"

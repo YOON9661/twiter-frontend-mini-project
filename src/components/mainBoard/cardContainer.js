@@ -116,7 +116,7 @@ const CardContainer = ({
                                                                 <div>
                                                                     <Image
                                                                         key={image.id}
-                                                                        width={200}
+                                                                        width='100%'
                                                                         src={image.Imagepath}
                                                                     />
                                                                 </div>
@@ -127,7 +127,7 @@ const CardContainer = ({
                                                             {Retweet?.Images.map(image => (
                                                                 <Image
                                                                     key={image.id}
-                                                                    width={200}
+                                                                    width='100%'
                                                                     src={image.Imagepath}
                                                                 />
                                                             ))}
@@ -153,7 +153,7 @@ const CardContainer = ({
                                                         <div>
                                                             <Image
                                                                 key={image.id}
-                                                                width={200}
+                                                                width='90%'
                                                                 src={image.Imagepath}
                                                             />
                                                         </div>
@@ -165,7 +165,7 @@ const CardContainer = ({
                                                 {images.map(image => (
                                                     <Image
                                                         key={image.id}
-                                                        width={200}
+                                                        width='90%'
                                                         src={image.Imagepath}
                                                     />
                                                 ))}

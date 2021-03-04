@@ -20,7 +20,7 @@ export default function* postCommentLikeSaga() {
 
 // comment like
 function commentLikeAPI(data) {
-    return axios.post("/comment/:id/like", data);
+    return axios.post(`/comment/${data}/like`);
 }
 function* commentLike(action) {
     try {
@@ -43,7 +43,7 @@ function* watchCommentLike() {
 
 // comment like delete
 function commentLikeDeleteAPI(data) {
-    return axios.post("/comment/:id/like/delete", data);
+    return axios.delete(`/comment/${data}/like/delete`);
 }
 function* commentLikeDelete(action) {
     try {
