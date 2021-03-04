@@ -23,12 +23,14 @@ export default function* postCommentCrudSaga() {
 }
 
 // upload
-function postCommentAPI(data) {
-    return axios.post("/post/:id/comment", data);
+function postCommentAPI(PostId, comment) {
+    return axios.post(`/post/${PostId}/comment`, { comment });
 }
 function* postComment(action) {
     try {
-        const result = yield call(postCommentAPI, action.payload);
+        const result = yield call(postCommentAPI,
+            action.payload.PostId,
+            action.payload.comment);
         yield put({
             type: POST_COMMENT_SUCCESS,
             payload: result.data

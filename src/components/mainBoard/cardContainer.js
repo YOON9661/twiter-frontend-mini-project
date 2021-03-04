@@ -22,10 +22,10 @@ import {
 } from "../../redux/post/postRetweet";
 
 
-
+// start
 const CardContainer = ({
     PostId, UserId, UserNick, content,
-    images, postLikers, Retweet }) => {
+    images, postLikers, Retweet, Retweeters, Comments }) => {
     const dispatch = useDispatch();
 
     // myData
@@ -61,8 +61,19 @@ const CardContainer = ({
                 }}
                 actions={[
                     <div>
-                        <RetweetOutlined onClick={onClickRetweet} />
-                        <div>4</div>
+                        {Retweeters.includes(myId) ? (
+                            <>
+                                <RetweetOutlined
+                                    style={{ color: '#1795EA' }}
+                                    onClick={onClickRetweet} />
+                            </>
+                        ) : (
+                            <>
+                                <RetweetOutlined
+                                    onClick={onClickRetweet} />
+                            </>
+                        )}
+                        <div>{Retweeters.length}</div>
                     </div>,
                     <div>
                         {postLikers.map(postLiker => postLiker.id).includes(myId) ? (
@@ -74,7 +85,7 @@ const CardContainer = ({
                     </div>,
                     <div onClick={onOpenCommentBlock}>
                         <CommentOutlined />
-                        <div>4</div>
+                        <div>{Comments.length}</div>
                     </div>,
                     <EllipsisOutlined />
                 ]}
@@ -168,7 +179,7 @@ const CardContainer = ({
                     }
                 />
             </Card>
-            {watchComment && <CommentBlock />}
+            {watchComment && <CommentBlock Comments={Comments} PostId={PostId} />}
 
         </>
     );
@@ -178,7 +189,9 @@ CardContainer.propTypes = {
     images: PropTypes.array,
     postLikers: PropTypes.array,
     content: PropTypes.string,
-    Retweet: PropTypes.object
+    Retweet: PropTypes.object,
+    Retweeters: PropTypes.array,
+    Comments: PropTypes.array
 }
 
 export default CardContainer;

@@ -43,6 +43,9 @@ const MainBoardPage = ({ history }) => {
                             postLikers={postData.PostLikers}
                             images={postData.Images}
                             Retweet={postData.Retweet}
+                            Retweeters={postData.Retweeters.map(retweeter => (
+                                retweeter.id))}
+                            Comments={postData.Comments}
                         />
                     ))}
 
