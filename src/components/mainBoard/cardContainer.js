@@ -1,8 +1,9 @@
 import React, { useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import PropTypes from 'prop-types';
+import { withRouter } from "react-router-dom";
 // import { useDispatch } from "react-redux";
-import styled from "styled-components"
+// import styled from "styled-components"
 import { Card, Avatar, Image, Carousel } from 'antd';
 import {
     HeartOutlined,
@@ -22,7 +23,7 @@ import {
 
 // start
 const CardContainer = ({
-    PostId, UserId, UserNick, content,
+    PostId, UserId, UserNick, content, history,
     images, postLikers, Retweet, Retweeters, Comments }) => {
     const dispatch = useDispatch();
 
@@ -31,17 +32,26 @@ const CardContainer = ({
     ; const myId = loginData?.id
 
     // like update
+    const [usePostLiker, setUserPostLiker] = useState(postLikers.map(postLiker => postLiker.id));
     const onClickLike = useCallback(() => {
-        dispatch(postLikeRequest(PostId));
-    }, [dispatch, PostId]);
+        dispatch(postLikeRequest(PostId));;
+        setUserPostLiker([myId, ...usePostLiker]);
+    }, [dispatch, PostId, myId, usePostLiker]);
     const onClickLikeDelete = useCallback(() => {
         dispatch(postLikeDeleteRequest(PostId));
-    }, [dispatch, PostId]);
+        setUserPostLiker([...usePostLiker].filter(likerId => {
+            return likerId !== myId
+        }));
+    }, [dispatch, myId, PostId, usePostLiker]);
+
 
     // retweet
+    const [useRetweeters, setUseRetweeters] = useState([...Retweeters]);
     const onClickRetweet = useCallback(() => {
         dispatch(postRetweetRequest(PostId));
-    }, [dispatch, PostId]);
+        setUseRetweeters([myId, ...useRetweeters]);
+        history.push('/');
+    }, [dispatch, PostId, history]);
 
     // open commentBlock
     const [watchComment, setWatchComment] = useState(false);
@@ -59,7 +69,7 @@ const CardContainer = ({
                 }}
                 actions={[
                     <div>
-                        {Retweeters.includes(myId) ? (
+                        {useRetweeters.includes(myId) ? (
                             <>
                                 <RetweetOutlined
                                     style={{ color: '#1795EA' }}
@@ -71,15 +81,15 @@ const CardContainer = ({
                                     onClick={onClickRetweet} />
                             </>
                         )}
-                        <div>{Retweeters.length}</div>
+                        <div>{useRetweeters.length}</div>
                     </div>,
                     <div>
-                        {postLikers.map(postLiker => postLiker.id).includes(myId) ? (
+                        {usePostLiker.includes(myId) ? (
                             <HeartTwoTone onClick={onClickLikeDelete} />
                         ) : (
                             <HeartOutlined onClick={onClickLike} />
                         )}
-                        <div>{postLikers.length}</div>
+                        <div>{usePostLiker.length}</div>
                     </div>,
                     <div onClick={onOpenCommentBlock}>
                         <CommentOutlined />
@@ -192,5 +202,5 @@ CardContainer.propTypes = {
     Comments: PropTypes.array
 }
 
-export default CardContainer;
+export default withRouter(CardContainer);
 

@@ -2,9 +2,9 @@ import { createAction, handleActions } from "redux-actions";
 import produce from "immer";
 
 // get user
-export const GET_USER_REQUEST = "POST_LIKE_REQUEST";
-export const GET_USER_SUCCESS = "POST_LIKE_SUCCESS";
-export const GET_USER_FAILURE = "POST_LIKE_FAILURE";
+export const GET_USER_REQUEST = "GET_USER_REQUEST";
+export const GET_USER_SUCCESS = "GET_USER_SUCCESS";
+export const GET_USER_FAILURE = "GET_USER_FAILURE";
 export const GET_USER_INITIALIZE = "GET_USER_INITIALIZE";
 export const getUserRequest = createAction(GET_USER_REQUEST, data => data);
 export const getUserInitialize = createAction(GET_USER_INITIALIZE);

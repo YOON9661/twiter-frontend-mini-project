@@ -5,7 +5,7 @@ import produce from "immer";
 export const GET_POSTS_REQUEST = "GET_POSTS_REQUEST";
 export const GET_POSTS_SUCCESS = "GET_POSTS_SUCCESS";
 export const GET_POSTS_FAILURE = "GET_POSTS_FAILURE";
-export const getPostsRequest = createAction(GET_POSTS_REQUEST, data => data);
+export const getPostsRequest = createAction(GET_POSTS_REQUEST);
 
 // post update
 export const POST_UPLOAD_REQUEST = "POST_UPLOAD_REQUEST";
@@ -51,12 +51,12 @@ export const postRetweetRequest = createAction(POST_RETWEET_REQUEST, data => dat
 export const POST_COMMENT_REQUEST = "POST_COMMENT_REQUEST";
 export const POST_COMMENT_SUCCESS = "POST_COMMENT_SUCCESS";
 export const POST_COMMENT_FAILURE = "POST_COMMENT_FAILURE";
-export const POST_COMMENT_UPDATE_REQUEST = "POST_COMMENT_REQUEST";
-export const POST_COMMENT_UPDATE_SUCCESS = "POST_COMMENT_SUCCESS";
-export const POST_COMMENT_UPDATE_FAILURE = "POST_COMMENT_FAILURE";
-export const POST_COMMENT_DELETE_REQUEST = "POST_COMMENT_REQUEST";
-export const POST_COMMENT_DELETE_SUCCESS = "POST_COMMENT_SUCCESS";
-export const POST_COMMENT_DELETE_FAILURE = "POST_COMMENT_FAILURE";
+export const POST_COMMENT_UPDATE_REQUEST = "POST_COMMENT_UPDATE_REQUEST";
+export const POST_COMMENT_UPDATE_SUCCESS = "POST_COMMENT_UPDATE_SUCCESS";
+export const POST_COMMENT_UPDATE_FAILURE = "POST_COMMENT_UPDATE_FAILURE";
+export const POST_COMMENT_DELETE_REQUEST = "POST_COMMENT_DELETE_REQUEST";
+export const POST_COMMENT_DELETE_SUCCESS = "POST_COMMENT_DELETE_SUCCESS";
+export const POST_COMMENT_DELETE_FAILURE = "POST_COMMENT_DELETE_FAILURE";
 export const postCommentRequest = createAction(POST_COMMENT_REQUEST, data => data);
 export const postCommentUpdateRequest = createAction(POST_COMMENT_UPDATE_REQUEST, data => data);
 export const postCommentDeleteRequest = createAction(POST_COMMENT_DELETE_REQUEST);
