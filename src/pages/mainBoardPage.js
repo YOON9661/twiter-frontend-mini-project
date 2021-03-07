@@ -40,7 +40,9 @@ const MainBoardPage = ({ history }) => {
                             UserId={postData.UserId}
                             UserNick={postData.User?.nickname}
                             content={postData.content}
-                            postLikers={postData.PostLikers}
+                            postLikers={postData.PostLikers.map(postLiker => (
+                                postLiker.id
+                            ))}
                             images={postData.Images}
                             Retweet={postData.Retweet}
                             Retweeters={postData.Retweeters.map(retweeter => (

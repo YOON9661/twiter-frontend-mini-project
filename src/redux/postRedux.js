@@ -1,4 +1,4 @@
-import { createAction, handleActions } from "redux-actions";
+import { createAction } from "redux-actions";
 import produce from "immer";
 
 // get posts
@@ -51,15 +51,15 @@ export const postRetweetRequest = createAction(POST_RETWEET_REQUEST, data => dat
 export const POST_COMMENT_REQUEST = "POST_COMMENT_REQUEST";
 export const POST_COMMENT_SUCCESS = "POST_COMMENT_SUCCESS";
 export const POST_COMMENT_FAILURE = "POST_COMMENT_FAILURE";
+export const postCommentRequest = createAction(POST_COMMENT_REQUEST, data => data);
 export const POST_COMMENT_UPDATE_REQUEST = "POST_COMMENT_UPDATE_REQUEST";
 export const POST_COMMENT_UPDATE_SUCCESS = "POST_COMMENT_UPDATE_SUCCESS";
 export const POST_COMMENT_UPDATE_FAILURE = "POST_COMMENT_UPDATE_FAILURE";
+export const postCommentUpdateRequest = createAction(POST_COMMENT_UPDATE_REQUEST, data => data);
 export const POST_COMMENT_DELETE_REQUEST = "POST_COMMENT_DELETE_REQUEST";
 export const POST_COMMENT_DELETE_SUCCESS = "POST_COMMENT_DELETE_SUCCESS";
 export const POST_COMMENT_DELETE_FAILURE = "POST_COMMENT_DELETE_FAILURE";
-export const postCommentRequest = createAction(POST_COMMENT_REQUEST, data => data);
-export const postCommentUpdateRequest = createAction(POST_COMMENT_UPDATE_REQUEST, data => data);
-export const postCommentDeleteRequest = createAction(POST_COMMENT_DELETE_REQUEST);
+export const postCommentDeleteRequest = createAction(POST_COMMENT_DELETE_REQUEST, data => data);
 
 // post comment like
 export const COMMENT_LIKE_REQUEST = "COMMENT_LIKE_REQUEST";
@@ -74,333 +74,236 @@ export const commentLikeDeleteRequest = createAction(COMMENT_LIKE_DELETE_REQUEST
 
 // initialState
 const initialState = {
+    // 왕
+    postsData: [],
     // get posts
     isGettingPosts: false,
     isPostsGetted: false,
-    postsData: [],
     postsDataError: null,
-
     // post upload
     isPostUploading: false,
     isPostUploaded: false,
     postUploadData: null,
     postUploadError: null,
-
     // post preview
     isPostPreviewing: false,
     isPostPreviewed: false,
     postPreviewData: null,
     postPreviewError: null,
-
     // post update 
     isUpdatingPost: false,
     isPostUpdated: false,
     updatePostData: null,
     updatePostError: null,
-
     // post delete
     isDeletingPost: false,
     isPostDeleted: false,
     deletePostData: null,
     deletePostError: null,
-
     // post retweet
     isRetweetingPost: false,
     isPostRetweeted: false,
     retweetPostData: null,
     retweetPostError: null,
-
     // post like
     isLiking: false,
     likeSuccess: false,
-    likeData: null,
     likeError: null,
-
     // post like delete
     isDeletingLike: false,
     deleteLikeSuccess: false,
-    likeDeleteData: null,
     likeDeleteError: null,
-
     // post comment upload
     isUploadingComment: false,
     isCommentUploaded: false,
-    commentData: null,
     commentDataError: null,
-
-    // post commeent update
-    isUpdatingComment: false,
-    isCommentUpdated: false,
-    commentUpdateData: null,
-    commentUpdateError: null,
-
     // post comment delete
     isDeletingComment: false,
     isCommentDeleted: false,
-    commentDeleteData: null,
     commentDeleteError: null,
-
+    // post commeent update
+    isUpdatingComment: false,
+    isCommentUpdated: false,
+    commentUpdateError: null,
     // post comment like
     isLikingComment: false,
     isCommentLiked: false,
-    commentLikeData: null,
     commentLikeError: null,
-
     // post comment like delete
     isDeletingCommentLike: false,
     isCommentLikeDeleted: false,
-    CommentLikeDeleteData: null,
     CommentLikeDeleteError: null
 }
 
-const postReducer = handleActions(
-    {
-        // get posts
-        [GET_POSTS_REQUEST]: (state, action) => (
-            produce(state, draft => {
+const postReducer = (state = initialState, action) => {
+    return produce(state, draft => {
+        switch (action.type) {
+            // get_posts
+            case GET_POSTS_REQUEST:
                 draft.isGettingPosts = true;
-            })),
-        [GET_POSTS_SUCCESS]: (state, { payload: postsData }) => (
-            produce(state, draft => {
+                break;
+            case GET_POSTS_SUCCESS:
                 draft.isGettingPosts = false;
                 draft.isPostsGetted = true;
-                draft.postsData = postsData;
+                draft.postsData = action.payload;
                 draft.postsDataError = null;
-            })),
-        [GET_POSTS_FAILURE]: (state, { payload: postsDataError }) => (
-            produce(state, draft => {
+                break;
+            case GET_POSTS_FAILURE:
                 draft.isGettingPosts = false;
-                draft.postsDataError = postsDataError;
-            })),
-
-        // post update
-        [POST_UPLOAD_REQUEST]: (state, action) => (
-            produce(state, draft => {
+                draft.postsDataError = action.payload;
+                break;
+            case POST_UPLOAD_REQUEST:
                 draft.isPostUploading = true;
-            })),
-        [POST_UPLOAD_SUCCESS]: (state, { payload: postUploadData }) => (
-            produce(state, draft => {
+                break;
+            case POST_UPLOAD_SUCCESS:
                 draft.isPostUploading = false;
                 draft.isPostUploaded = true;
-                draft.postUploadData = postUploadData;
+                draft.postUploadData = action.payload;
                 draft.postUploadError = null;
-            })),
-        [POST_UPLOAD_FAILURE]: (state, { payload: postUploadError }) => (
-            produce(state, draft => {
+                break;
+            case POST_UPLOAD_FAILURE:
                 draft.isPostUploading = false;
-                draft.postUploadError = postUploadError;
-            })),
-        [POST_UPLOAD_INITIALIZE]: (state, action) => (
-            produce(state, draft => {
-                draft.isPostUploaded = false;
+                draft.postUploadError = action.payload;
+                break;
+            case POST_UPLOAD_INITIALIZE:
+                draft.isPostUpdated = false;
                 draft.postUploadData = null;
-            })),
-
-        // post preview
-        [POST_PREVIEW_REQUEST]: (state, action) => (
-            produce(state, draft => {
+                break;
+            case POST_PREVIEW_REQUEST:
                 draft.isPostPreviewing = true;
-            })),
-        [POST_PREVIEW_SUCCESS]: (state, { payload: postPreviewData }) => (
-            produce(state, draft => {
+                break;
+            case POST_PREVIEW_SUCCESS:
                 draft.isPostPreviewing = false;
                 draft.isPostPreviewed = true;
-                draft.postPreviewData = postPreviewData;
+                draft.postPreviewData = action.payload;
                 draft.postPreviewError = null;
-            })),
-        [POST_PREVIEW_FAILURE]: (state, { payload: postPreviewError }) => (
-            produce(state, draft => {
+                break;
+            case POST_PREVIEW_FAILURE:
                 draft.isPostPreviewing = false;
-                draft.postPreviewError = postPreviewError;
-            })),
-        [POST_PREVIEW_INITIALIZE]: (state, action) => (
-            produce(state, draft => {
+                draft.postPreviewError = action.payload;
+                break;
+            case POST_PREVIEW_INITIALIZE:
                 draft.isPostPreviewed = false;
                 draft.postPreviewData = null;
-            })),
-
-        // post update
-        [POST_UPDATE_REQUEST]: (state, action) => (
-            produce(state, draft => {
-                draft.isUpdatingPost = true;
-            })),
-        [POST_UPDATE_SUCCESS]: (state, { payload: updatePostData }) => (
-            produce(state, draft => {
-                draft.isUpdatingPost = false;
-                draft.isPostUpdated = true;
-                draft.updatePostData = updatePostData;
-                draft.updatePostError = null;
-            })),
-        [POST_UPDATE_FAILURE]: (state, { payload: updatePostError }) => (
-            produce(state, draft => {
-                draft.isUpdatingPost = false;
-                draft.updatePostError = updatePostError;
-            })),
-
-        // post delete
-        [POST_DELETE_REQUEST]: (state, action) => (
-            produce(state, draft => {
-                draft.isDeletingPost = false;
-                draft.postUploadData = null;
-            })),
-        [POST_DELETE_SUCCESS]: (state, { payload: deletePostData }) => (
-            produce(state, draft => {
-                draft.isDeletingPost = false;
-                draft.isPostDeleted = true;
-                draft.deletePostData = deletePostData
-                draft.deletePostError = null;
-            })),
-        [POST_DELETE_FAILURE]: (state, { payload: deletePostError }) => (
-            produce(state, draft => {
-                draft.isDeletingPost = false;
-                draft.deletePostError = deletePostError;
-            })),
-
-        // postlike
-        [POST_LIKE_REQUEST]: (state, action) => (
-            produce(state, draft => {
-                draft.isLiking = true;
-            })),
-        [POST_LIKE_SUCCESS]: (state, { payload: likeData }) => (
-            produce(state, draft => {
-                draft.isLiking = false;
-                draft.likeSuccess = true;
-                draft.likeData = likeData
-                draft.likeError = null;
-            })),
-        [POST_LIKE_FAILURE]: (state, { payload: likeError }) => (
-            produce(state, draft => {
-                draft.isLiking = false;
-                draft.likeError = likeError;
-            })),
-
-        // postLikeDelete
-        [POST_LIKE_DELETE_REQUEST]: (state, action) => (
-            produce(state, draft => {
-                draft.isDeletingLike = true;
-            })),
-        [POST_LIKE_DELETE_SUCCESS]: (state, { payload: likeDeleteData }) => (
-            produce(state, draft => {
-                draft.isDeletingLike = false;
-                draft.deleteLikeSuccess = true;
-                draft.likeDeleteData = likeDeleteData;
-                draft.likeDeleteError = null;
-            })),
-        [POST_LIKE_DELETE_FAILURE]: (state, { payload: likeDeleteError }) => (
-            produce(state, draft => {
-                draft.isDeletingLike = false;
-                draft.likeDeleteError = likeDeleteError;
-            })),
-
-        // post retweet
-        [POST_RETWEET_REQUEST]: (state, action) => (
-            produce(state, draft => {
+                break;
+            case POST_RETWEET_REQUEST:
                 draft.isRetweetingPost = true;
-            })),
-        [POST_RETWEET_SUCCESS]: (state, { payload: retweetPostData }) => (
-            produce(state, draft => {
+                break;
+            case POST_RETWEET_SUCCESS:
                 draft.isRetweetingPost = false;
                 draft.isPostRetweeted = true;
-                draft.retweetPostData = retweetPostData;
+                draft.retweetPostData = action.payload;
                 draft.retweetPostError = null;
-            })),
-        [POST_RETWEET_FAILURE]: (state, { payload: retweetPostError }) => (
-            produce(state, draft => {
+                break;
+            case POST_RETWEET_FAILURE:
                 draft.isRetweetingPost = false;
-                draft.retweetPostError = retweetPostError;
-            })),
-
-        // post comment upload
-        [POST_COMMENT_REQUEST]: (state, action) => (
-            produce(state, draft => {
+                draft.retweetPostError = action.payload;
+                break;
+            case POST_LIKE_REQUEST:
+                draft.isLiking = true;
+                break;
+            case POST_LIKE_SUCCESS: {
+                const post = draft.postsData.find(postData =>
+                    postData.id === parseInt(action.payload.PostId)
+                );
+                post.PostLikers.unshift(action.payload);
+                draft.isLiking = false;
+                draft.likeSuccess = true;
+                draft.likeError = null;
+                break;
+            }
+            case POST_LIKE_FAILURE:
+                draft.isLiking = false;
+                draft.likeError = action.payload;
+                break;
+            case POST_LIKE_DELETE_REQUEST:
+                draft.isDeletingLike = true;
+                break;
+            case POST_LIKE_DELETE_SUCCESS: {
+                const post = draft.postsData.find(postData =>
+                    postData.id === parseInt(action.payload.PostId)
+                );
+                post.PostLikers = post.PostLikers.filter(postLiker =>
+                    postLiker.id !== action.payload.id
+                );
+                draft.isDeletingLike = false;
+                draft.deleteLikeSuccess = true;
+                draft.likeDeleteError = null;
+                break;
+            }
+            case POST_LIKE_DELETE_FAILURE:
+                draft.isDeletingLike = false;
+                draft.likeDeleteError = action.payload
+                break;
+            case POST_COMMENT_REQUEST:
                 draft.isUploadingComment = true;
-            })),
-        [POST_COMMENT_SUCCESS]: (state, { payload: commentData }) => (
-            produce(state, draft => {
+                break;
+            case POST_COMMENT_SUCCESS: {
+                const post = draft.postsData.find(postData =>
+                    postData.id === parseInt(action.payload.PostId)
+                );
+                post.Comments.unshift(action.payload);
                 draft.isUploadingComment = false;
-                draft.isCommentUpdated = true;
-                draft.commentData = commentData;
+                draft.isCommentUploaded = false;
                 draft.commentDataError = null;
-            })),
-        [POST_COMMENT_FAILURE]: (state, { payload: commentDataError }) => (
-            produce(state, draft => {
+                break;
+            }
+            case POST_COMMENT_FAILURE:
                 draft.isUploadingComment = false;
-                draft.commentDataError = commentDataError;
-            })),
-
-        // post comment update
-        [POST_COMMENT_UPDATE_REQUEST]: (state, action) => (
-            produce(state, draft => {
-                draft.isUpdatingComment = true;
-            })),
-        [POST_COMMENT_UPDATE_SUCCESS]: (state, { payload: commentUpdateData }) => (
-            produce(state, draft => {
-                draft.isUpdatingComment = false;
-                draft.isCommentUploaded = true;
-                draft.commentUpdateData = commentUpdateData;
-                draft.commentUpdateError = null;
-            })),
-        [POST_COMMENT_UPDATE_FAILURE]: (state, { payload: commentUpdateError }) => (
-            produce(state, draft => {
-                draft.isUpdatingComment = false;
-                draft.commentUpdateError = commentUpdateError;
-            })),
-
-        //post comment DELETE
-        [POST_COMMENT_DELETE_REQUEST]: (state, action) => (
-            produce(state, draft => {
+                draft.commentDataError = action.payload;
+                break;
+            case POST_COMMENT_DELETE_REQUEST:
                 draft.isDeletingComment = true;
-            })),
-        [POST_COMMENT_DELETE_SUCCESS]: (state, { payload: commentDeleteData }) => (
-            produce(state, draft => {
+                break;
+            case POST_COMMENT_DELETE_SUCCESS: {
+                const post = draft.postsData.find(postData =>
+                    postData.id === parseInt(action.payload.postId)
+                );
+                post.Comments = post.Comments.filter(comment => {
+                    return comment.id !== action.payload.commentId
+                });
                 draft.isDeletingComment = false;
                 draft.isCommentDeleted = true;
-                draft.commentDeleteData = commentDeleteData;
-                draft.commentDeleteError = null;
-            })),
-        [POST_COMMENT_DELETE_FAILURE]: (state, { payload: commentDeleteError }) => (
-            produce(state, draft => {
+                draft.commentDeleteData = null;
+                break;
+            }
+            case POST_COMMENT_DELETE_FAILURE:
                 draft.isDeletingComment = false;
-                draft.commentDeleteError = commentDeleteError;
-            })),
-
-        // postCommentLike
-        [COMMENT_LIKE_REQUEST]: (state, action) => (
-            produce(state, draft => {
+                draft.commentDeleteData = action.payload;
+                break;
+            case POST_COMMENT_UPDATE_REQUEST:
+                draft.isUpdatingComment = true;
+                break;
+            case POST_COMMENT_UPDATE_SUCCESS:
+                draft.isUpdatingComment = false;
+                draft.isCommentUpdated = true;
+                break;
+            case POST_COMMENT_UPDATE_FAILURE:
+                draft.isUpdatingComment = false;
+                draft.commentUpdateError = action.payload;
+                break;
+            case COMMENT_LIKE_REQUEST:
                 draft.isLikingComment = true;
-            })),
-        [COMMENT_LIKE_SUCCESS]: (state, { payload: commentLikeData }) => (
-            produce(state, draft => {
+                break;
+            case COMMENT_LIKE_SUCCESS:
                 draft.isLikingComment = false;
-                draft.isCommentLiked = true;
-                draft.commentLikeData = commentLikeData;
-                draft.commentLikeError = null;
-            })),
-        [COMMENT_LIKE_FAILURE]: (state, { payload: commentLikeError }) => (
-            produce(state, draft => {
+                break;
+            case COMMENT_LIKE_FAILURE:
                 draft.isLikingComment = false;
-                draft.commentLikeError = commentLikeError;
-            })),
-
-        // postCommentLikeDelete
-        [COMMENT_LIKE_DELETE_REQUEST]: (state, action) => (
-            produce(state, draft => {
+                break;
+            case COMMENT_LIKE_DELETE_REQUEST:
                 draft.isDeletingCommentLike = true;
-            })),
-        [COMMENT_LIKE_DELETE_SUCCESS]: (state, { payload: CommentLikeDeleteData }) => (
-            produce(state, draft => {
+                break;
+            case COMMENT_LIKE_DELETE_SUCCESS:
                 draft.isDeletingCommentLike = false;
-                draft.isCommentLikeDeleted = true;
-                draft.CommentLikeDeleteData = CommentLikeDeleteData;
-                draft.CommentLikeDeleteError = null;
-            })),
-        [COMMENT_LIKE_DELETE_FAILURE]: (state, { payload: CommentLikeDeleteError }) => (
-            produce(state, draft => {
+                break;
+            case COMMENT_LIKE_DELETE_FAILURE:
                 draft.isDeletingCommentLike = false;
-                draft.CommentLikeDeleteError = CommentLikeDeleteError;
-            }))
-    },
-    initialState
-);
+                break;
+            default:
+                break;
+        }
+    })
+};
 
 export default postReducer;

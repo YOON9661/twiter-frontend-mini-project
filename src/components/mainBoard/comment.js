@@ -1,5 +1,5 @@
 import { Comment, Avatar, Form, Button, Input } from 'antd';
-import React, { useCallback, useState } from "react";
+import React, { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { HeartOutlined } from "@ant-design/icons"
@@ -28,20 +28,20 @@ const CommentBlock = ({ Comments, PostId }) => {
 
     // 댓글 생성 / 삭제
     const [comment, onChangeComment] = useInput("");
-    const [useComments, setUseComments] = useState([...Comments]);
+    // const [useComments, setUseComments] = useState([...Comments]);
     // const { commentData } = useSelector(state => state.postReducer);
     const onSubmit = useCallback(() => {
         dispatch(postCommentRequest({ PostId, comment }));
-        setUseComments([{
-            id: Comments?.id || 10000,
-            content: comment,
-            User: {
-                id: myId,
-                nickname: loginData?.nickname
-            },
-            CommentLikers: []
-        }, ...useComments]);
-    }, [dispatch, PostId, comment, useComments]);
+        // setUseComments([{
+        //     id: Comments?.id || 10000,
+        //     content: comment,
+        //     User: {
+        //         id: myId,
+        //         nickname: loginData?.nickname
+        //     },
+        //     CommentLikers: []
+        // }, ...useComments]);
+    }, [dispatch, PostId, comment]);
 
     // 댓글 좋아요 / 좋아요 취소ㅓ
 
@@ -63,7 +63,7 @@ const CommentBlock = ({ Comments, PostId }) => {
             </Form>
 
             <CommentWraper>
-                {useComments.map((comment, index) => (
+                {Comments.map((comment, index) => (
                     <Comment
                         key={index}
                         actions={[

@@ -32,17 +32,12 @@ const CardContainer = ({
     ; const myId = loginData?.id
 
     // like update
-    const [usePostLiker, setUserPostLiker] = useState(postLikers.map(postLiker => postLiker.id));
     const onClickLike = useCallback(() => {
         dispatch(postLikeRequest(PostId));;
-        setUserPostLiker([myId, ...usePostLiker]);
-    }, [dispatch, PostId, myId, usePostLiker]);
+    }, [dispatch, PostId]);
     const onClickLikeDelete = useCallback(() => {
         dispatch(postLikeDeleteRequest(PostId));
-        setUserPostLiker([...usePostLiker].filter(likerId => {
-            return likerId !== myId
-        }));
-    }, [dispatch, myId, PostId, usePostLiker]);
+    }, [dispatch, PostId]);
 
 
     // retweet
@@ -51,7 +46,7 @@ const CardContainer = ({
         dispatch(postRetweetRequest(PostId));
         setUseRetweeters([myId, ...useRetweeters]);
         history.push('/');
-    }, [dispatch, PostId, history]);
+    }, [dispatch, PostId, history, useRetweeters, myId]);
 
     // open commentBlock
     const [watchComment, setWatchComment] = useState(false);
@@ -84,12 +79,12 @@ const CardContainer = ({
                         <div>{useRetweeters.length}</div>
                     </div>,
                     <div>
-                        {usePostLiker.includes(myId) ? (
+                        {postLikers.includes(myId) ? (
                             <HeartTwoTone onClick={onClickLikeDelete} />
                         ) : (
                             <HeartOutlined onClick={onClickLike} />
                         )}
-                        <div>{usePostLiker.length}</div>
+                        <div>{postLikers.length}</div>
                     </div>,
                     <div onClick={onOpenCommentBlock}>
                         <CommentOutlined />

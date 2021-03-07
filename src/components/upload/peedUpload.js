@@ -28,7 +28,7 @@ const PeedUpload = () => {
         formData.append("img", e.target.files[0])
         dispatch(postPreviewRequest(formData));
     }, [dispatch]);
-    const { postPreviewData } = useSelector(state => state.postUpload);
+    const { postPreviewData } = useSelector(state => state.postReducer);
     // preview delete
     const onClickPreviewDelete = useCallback(() => {
         dispatch(postPreviewInitializeRequest());

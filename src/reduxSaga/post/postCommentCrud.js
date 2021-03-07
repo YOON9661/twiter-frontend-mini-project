@@ -28,9 +28,10 @@ function postCommentAPI(PostId, comment) {
 }
 function* postComment(action) {
     try {
-        const result = yield call(postCommentAPI,
-            action.payload.PostId,
-            action.payload.comment);
+        const result = yield call(postCommentAPI, action.payload.PostId, action.payload.comment);
+        if (!result) {
+            return console.log("데이터 없다 ");
+        }
         yield put({
             type: POST_COMMENT_SUCCESS,
             payload: result.data
@@ -38,7 +39,7 @@ function* postComment(action) {
     } catch (err) {
         yield put({
             type: POST_COMMENT_FAILURE,
-            payload: err.response.data
+            payload: "err.response.data"
         })
     }
 }
