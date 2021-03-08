@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { withRouter } from "react-router-dom";
 // import { useDispatch } from "react-redux";
 // import styled from "styled-components"
-import { Card, Avatar, Image, Carousel } from 'antd';
+import { Card, Avatar, Image, Carousel, Dropdown, Menu, Button } from 'antd';
 import {
     HeartOutlined,
     EllipsisOutlined,
@@ -17,7 +17,8 @@ import CommentBlock from "./comment";
 import {
     postLikeRequest,
     postLikeDeleteRequest,
-    postRetweetRequest
+    postRetweetRequest,
+    postDeleteRequest
 } from "../../redux/postRedux";
 
 
@@ -29,7 +30,7 @@ const CardContainer = ({
 
     // myData
     const { loginData } = useSelector(state => state.userReducer);
-    ; const myId = loginData?.id
+    const myId = loginData?.id
 
     // like update
     const onClickLike = useCallback(() => {
@@ -90,7 +91,37 @@ const CardContainer = ({
                         <CommentOutlined />
                         <div>{Comments.length}</div>
                     </div>,
-                    <EllipsisOutlined />
+                    <Dropdown overlay={
+                        <div>
+                            {UserId === myId ? (
+                                <Menu>
+                                    <Menu.Item>
+                                        <Button
+                                            style={{ border: 'none' }}
+                                            onClick={() => {
+                                                dispatch(postDeleteRequest(PostId));
+                                            }}
+                                        >
+                                            삭제
+                                        </Button>
+                                    </Menu.Item>
+                                    <Menu.Item>
+                                        <Button style={{ border: 'none' }}>
+                                            수정
+                                        </Button>
+                                    </Menu.Item>
+                                </Menu>
+                            ) : (
+                                <Menu>
+                                    <Menu.Item>
+                                        신고
+                                    </Menu.Item>
+                                </Menu>
+                            )}
+                        </div>
+                    }>
+                        <EllipsisOutlined />
+                    </Dropdown>
                 ]}
             >
                 <Card.Meta
@@ -183,7 +214,6 @@ const CardContainer = ({
                 />
             </Card>
             {watchComment && <CommentBlock Comments={Comments} PostId={PostId} />}
-
         </>
     );
 }

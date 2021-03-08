@@ -43,7 +43,7 @@ function* watchPostUpdate() {
 
 // post delete
 function postDeleteAPI(data) {
-    return axios.post(`/post/${data}/delete`);
+    return axios.delete(`/post/${data}/delete`);
 }
 function* postDelete(action) {
     try {

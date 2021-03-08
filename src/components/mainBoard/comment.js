@@ -1,16 +1,17 @@
-import { Comment, Avatar, Form, Button, Input } from 'antd';
-import React, { useCallback } from "react";
+import {
+    Comment, Avatar, Form, Button,
+    Input, Dropdown, Menu
+} from 'antd';
+import React, { useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { HeartOutlined } from "@ant-design/icons"
+import { HeartOutlined, SettingOutlined } from "@ant-design/icons"
 
-
-import useInput from "../../lib/useInput"
 import {
     commentLikeRequest,
     commentLikeDeleteRequest,
     postCommentRequest,
-    // postCommentDeleteRequest,
+    postCommentDeleteRequest,
     // postCommentUpdateRequest
 } from "../../redux/postRedux";
 
@@ -26,24 +27,15 @@ const CommentBlock = ({ Comments, PostId }) => {
     const { loginData } = useSelector(state => state.userReducer);
     const myId = loginData?.id;
 
-    // 댓글 생성 / 삭제
-    const [comment, onChangeComment] = useInput("");
-    // const [useComments, setUseComments] = useState([...Comments]);
-    // const { commentData } = useSelector(state => state.postReducer);
+    // 댓글 생성
+    const [comment, setComment] = useState("");
+    const onChangeComment = useCallback((e) => {
+        setComment(e.target.value);
+    }, []);
     const onSubmit = useCallback(() => {
         dispatch(postCommentRequest({ PostId, comment }));
-        // setUseComments([{
-        //     id: Comments?.id || 10000,
-        //     content: comment,
-        //     User: {
-        //         id: myId,
-        //         nickname: loginData?.nickname
-        //     },
-        //     CommentLikers: []
-        // }, ...useComments]);
+        setComment("");
     }, [dispatch, PostId, comment]);
-
-    // 댓글 좋아요 / 좋아요 취소ㅓ
 
 
     return (
@@ -53,6 +45,7 @@ const CommentBlock = ({ Comments, PostId }) => {
                     <TextArea
                         placeholder="댓글을 입력하세요"
                         onChange={onChangeComment}
+                        value={comment}
                     />
                 </Form.Item>
                 <Form.Item>
@@ -63,9 +56,9 @@ const CommentBlock = ({ Comments, PostId }) => {
             </Form>
 
             <CommentWraper>
-                {Comments.map((comment, index) => (
+                {Comments.map((comment) => (
                     <Comment
-                        key={index}
+                        key={comment.id}
                         actions={[
                             <div style={{ display: 'flex' }}>
                                 <Button
@@ -76,14 +69,14 @@ const CommentBlock = ({ Comments, PostId }) => {
                                     )).includes(myId) ? (
                                         <HeartOutlined
                                             onClick={() => {
-                                                dispatch(commentLikeDeleteRequest(comment.id));
+                                                dispatch(commentLikeDeleteRequest({ comment }));
                                             }}
                                             style={{ color: 'red' }}
                                         />
                                     ) : (
                                         <HeartOutlined
                                             onClick={() => {
-                                                dispatch(commentLikeRequest(comment.id));
+                                                dispatch(commentLikeRequest({ comment }));
                                             }}
                                         />
                                     )}
@@ -91,7 +84,39 @@ const CommentBlock = ({ Comments, PostId }) => {
                                 <div style={{ margin: '3px' }}>
                                     {comment.CommentLikers.length}
                                 </div>
-                            </div>]}
+                            </div>,
+                            <Dropdown overlay={
+                                <div>
+                                    {comment.UserId === myId ? (
+                                        <Menu>
+                                            <Menu.Item>
+                                                <Button
+                                                    // onClick={onUpdateComment}
+                                                    style={{ border: 'none' }}>
+                                                    수정
+                                                </Button>
+                                            </Menu.Item>
+                                            <Menu.Item>
+                                                <Button
+                                                    onClick={() => {
+                                                        dispatch(postCommentDeleteRequest({ comment }));
+                                                    }}
+                                                    style={{ border: 'none' }}>
+                                                    삭제
+                                                </Button>
+                                            </Menu.Item>
+                                        </Menu>
+                                    ) : (
+                                        <Menu>
+                                            <Menu.Item>
+                                                신고
+                                            </Menu.Item>
+                                        </Menu>
+                                    )}
+                                </div>
+                            }>
+                                <SettingOutlined style={{ marginLeft: '30px' }} />
+                            </Dropdown>]}
                         author={<div>{comment.User.nickname}</div>}
                         avatar={<Avatar>{comment.User.nickname}</Avatar>}
                         content={<p>{comment.content}</p>}

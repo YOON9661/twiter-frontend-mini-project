@@ -72,12 +72,16 @@ function* watchPostCommentUpdate() {
 
 
 // delete
-function postCommentDeleteAPI(data) {
-    return axios.post("/post/:id/comment/delete", data);
+function postCommentDeleteAPI(PostId, CommentId) {
+    return axios.delete(`/post/${PostId}/comment/${CommentId}/delete`);
 }
 function* postCommentDelete(action) {
     try {
-        const result = yield call(postCommentDeleteAPI, action.payload);
+        const result = yield call(
+            postCommentDeleteAPI,
+            action.payload.comment.PostId,
+            action.payload.comment.id
+        );
         yield put({
             type: POST_COMMENT_DELETE_SUCCESS,
             payload: result.data

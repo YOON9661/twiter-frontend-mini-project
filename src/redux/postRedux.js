@@ -186,6 +186,23 @@ const postReducer = (state = initialState, action) => {
                 draft.isPostPreviewed = false;
                 draft.postPreviewData = null;
                 break;
+            case POST_DELETE_REQUEST:
+                draft.isDeletingPost = true;
+                break;
+            case POST_DELETE_SUCCESS: {
+                const postsData = draft.postsData.filter(postData => {
+                    return postData.id !== parseInt(action.payload.postId);
+                });
+                draft.postsData = postsData;
+                draft.isDeletingPost = false;
+                draft.isPostDeleted = true;
+                draft.deletePostError = null;
+                break;
+            }
+            case POST_DELETE_FAILURE:
+                draft.isDeletingPost = false;
+                draft.deletePostError = action.payload;
+                break;
             case POST_RETWEET_REQUEST:
                 draft.isRetweetingPost = true;
                 break;
@@ -260,7 +277,7 @@ const postReducer = (state = initialState, action) => {
                     postData.id === parseInt(action.payload.postId)
                 );
                 post.Comments = post.Comments.filter(comment => {
-                    return comment.id !== action.payload.commentId
+                    return comment.id !== parseInt(action.payload.commentId);
                 });
                 draft.isDeletingComment = false;
                 draft.isCommentDeleted = true;
@@ -285,20 +302,44 @@ const postReducer = (state = initialState, action) => {
             case COMMENT_LIKE_REQUEST:
                 draft.isLikingComment = true;
                 break;
-            case COMMENT_LIKE_SUCCESS:
+            case COMMENT_LIKE_SUCCESS: {
+                const post = draft.postsData.find(postData =>
+                    postData.id === parseInt(action.payload.postId)
+                );
+                post.Comments.find(comment =>
+                    comment.id === parseInt(action.payload.commentId)
+                ).CommentLikers.unshift(action.payload);
                 draft.isLikingComment = false;
+                draft.isCommentLiked = true;
                 break;
+            }
             case COMMENT_LIKE_FAILURE:
                 draft.isLikingComment = false;
+                draft.commentLikeError = action.payload;
                 break;
             case COMMENT_LIKE_DELETE_REQUEST:
                 draft.isDeletingCommentLike = true;
                 break;
-            case COMMENT_LIKE_DELETE_SUCCESS:
+            case COMMENT_LIKE_DELETE_SUCCESS: {
+                const post = draft.postsData.find(postData =>
+                    postData.id === parseInt(action.payload.postId)
+                );
+                const comment = post.Comments.find(comment =>
+                    comment.id === parseInt(action.payload.commentId)
+                );
+                const commentLikers = comment.CommentLikers.filter(commentLiker =>
+                    commentLiker.id !== parseInt(action.payload.id)
+                );
+                post.Comments.find(comment =>
+                    comment.id === parseInt(action.payload.commentId)
+                ).CommentLikers = commentLikers;
                 draft.isDeletingCommentLike = false;
+                draft.isCommentLikeDeleted = true;
                 break;
+            }
             case COMMENT_LIKE_DELETE_FAILURE:
                 draft.isDeletingCommentLike = false;
+                draft.CommentLikeDeleteError = action.payload;
                 break;
             default:
                 break;

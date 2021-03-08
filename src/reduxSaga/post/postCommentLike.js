@@ -19,12 +19,16 @@ export default function* postCommentLikeSaga() {
 }
 
 // comment like
-function commentLikeAPI(data) {
-    return axios.post(`/comment/${data}/like`);
+function commentLikeAPI(PostId, CommentId) {
+    return axios.post(`/post/${PostId}/comment/${CommentId}/like`);
 }
 function* commentLike(action) {
     try {
-        const result = yield call(commentLikeAPI, action.payload);
+        const result = yield call(
+            commentLikeAPI,
+            action.payload.comment.PostId,
+            action.payload.comment.id
+        );
         yield put({
             type: COMMENT_LIKE_SUCCESS,
             payload: result.data
@@ -42,12 +46,16 @@ function* watchCommentLike() {
 
 
 // comment like delete
-function commentLikeDeleteAPI(data) {
-    return axios.delete(`/comment/${data}/like/delete`);
+function commentLikeDeleteAPI(PostId, CommentId) {
+    return axios.delete(`/post/${PostId}/comment/${CommentId}/like/delete`);
 }
 function* commentLikeDelete(action) {
     try {
-        const result = yield call(commentLikeDeleteAPI, action.payload);
+        const result = yield call(
+            commentLikeDeleteAPI,
+            action.payload.comment.PostId,
+            action.payload.comment.id
+        );
         yield put({
             type: COMMENT_LIKE_DELETE_SUCCESS,
             payload: result.data
