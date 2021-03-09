@@ -18,7 +18,12 @@ const StoryUpload = () => {
                         <UploadOutlined />
                     </Form.Item>
                     <Form.Item>
-                        <Button type="primary">Submit</Button>
+                        <Button
+                            type="primary"
+                            htmlType="submit"
+                        >
+                            Submit
+                        </Button>
                     </Form.Item>
                 </Form>
             </StoryUploadBlock>

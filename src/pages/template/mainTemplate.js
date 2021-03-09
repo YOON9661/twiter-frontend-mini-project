@@ -20,7 +20,8 @@ const MainTemplate = ({ children, history }) => {
         history.push("/login");
     }, [dispatch, history]);
 
-    const { isLoggedIn } = useSelector(state => state.userReducer);
+    const { isLoggedIn, loginData } = useSelector(state => state.userReducer);
+    const myId = loginData?.id;
 
     return (
         <>
@@ -64,9 +65,9 @@ const MainTemplate = ({ children, history }) => {
                     </Link>
                 </Menu.Item>
                 <Menu.Item>
-                    {/* <Link to="/profile"> */}
+                    <Link to={`/profile/${myId}`}>
                         profile
-                    {/* </Link> */}
+                    </Link>
                 </Menu.Item>
                 <Menu.Item>
                     <SettingOutlined />

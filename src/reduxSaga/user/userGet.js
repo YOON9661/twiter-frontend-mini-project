@@ -5,7 +5,7 @@ import {
     GET_USER_REQUEST,
     GET_USER_SUCCESS,
     GET_USER_FAILURE
-} from "../../redux/userRedux";
+} from "../../redux/postRedux";
 
 export default function* userGetSaga() {
     yield all([
@@ -14,8 +14,8 @@ export default function* userGetSaga() {
 }
 
 // getUser -- profile에 필요
-function getUserAPI(data) {
-    return axios.post("/user/:id", data);
+function getUserAPI(userId) {
+    return axios.get(`/user/${userId}`);
 }
 function* getUser(action) {
     try {

@@ -1,10 +1,11 @@
 import React, { useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import PropTypes from 'prop-types';
-import { withRouter } from "react-router-dom";
-// import { useDispatch } from "react-redux";
-// import styled from "styled-components"
-import { Card, Avatar, Image, Carousel, Dropdown, Menu, Button } from 'antd';
+import { withRouter, Link } from "react-router-dom";
+import {
+    Card, Avatar, Image, Carousel,
+    Dropdown, Menu, Button
+} from 'antd';
 import {
     HeartOutlined,
     EllipsisOutlined,
@@ -126,7 +127,7 @@ const CardContainer = ({
             >
                 <Card.Meta
                     avatar={<Avatar>{UserNick}</Avatar>}
-                    title={UserNick}
+                    title={<Link to={`/profile/${UserId}`}>{UserNick}</Link>}
                     description={
                         <>
                             {Retweet ? (
@@ -213,7 +214,7 @@ const CardContainer = ({
                     }
                 />
             </Card>
-            {watchComment && <CommentBlock Comments={Comments} PostId={PostId} />}
+            {watchComment && <CommentBlock Comments={Comments} PostId={PostId} UserId={UserId} />}
         </>
     );
 }

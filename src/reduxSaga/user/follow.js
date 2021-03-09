@@ -8,7 +8,7 @@ import {
     UNFOLLOW_REQUEST,
     UNFOLLOW_SUCCESS,
     UNFOLLOW_FAILURE
-} from "../../redux/userRedux";
+} from "../../redux/postRedux";
 
 export default function* followSaga() {
     yield all([
@@ -19,7 +19,7 @@ export default function* followSaga() {
 
 // follow
 function followAPI(data) {
-    return axios.post("/user/:id/following", data);
+    return axios.post(`/user/${data}/following`);
 }
 function* follow(action) {
     try {
@@ -41,7 +41,7 @@ function* watchFollow() {
 
 // unfollow
 function unfollowAPI(data) {
-    return axios.post("/user/:id/unfollowing", data);
+    return axios.post(`/user/${data}/unfollowing`);
 }
 function* unfollow(action) {
     try {

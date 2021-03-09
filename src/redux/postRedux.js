@@ -71,6 +71,23 @@ export const COMMENT_LIKE_DELETE_FAILURE = "COMMENT_LIKE_DELETE_FAILURE";
 export const commentLikeRequest = createAction(COMMENT_LIKE_REQUEST, data => data);
 export const commentLikeDeleteRequest = createAction(COMMENT_LIKE_DELETE_REQUEST, data => data);
 
+// get user
+export const GET_USER_REQUEST = "GET_USER_REQUEST";
+export const GET_USER_SUCCESS = "GET_USER_SUCCESS";
+export const GET_USER_FAILURE = "GET_USER_FAILURE";
+export const GET_USER_INITIALIZE = "GET_USER_INITIALIZE";
+export const getUserRequest = createAction(GET_USER_REQUEST, data => data);
+export const getUserInitialize = createAction(GET_USER_INITIALIZE);
+
+// follow / unfollow
+export const FOLLOW_REQUEST = "FOLLOW_REQUEST";
+export const FOLLOW_SUCCESS = "FOLLOW_SUCCESS";
+export const FOLLOW_FAILURE = "FOLLOW_FAILURE";
+export const UNFOLLOW_REQUEST = "UNFOLLOW_REQUEST";
+export const UNFOLLOW_SUCCESS = "UNFOLLOW_SUCCESS";
+export const UNFOLLOW_FAILURE = "UNFOLLOW_FAILURE";
+export const followRequest = createAction(FOLLOW_REQUEST, data => data);
+export const unFollowRequest = createAction(UNFOLLOW_REQUEST, data => data);
 
 // initialState
 const initialState = {
@@ -132,7 +149,20 @@ const initialState = {
     // post comment like delete
     isDeletingCommentLike: false,
     isCommentLikeDeleted: false,
-    CommentLikeDeleteError: null
+    CommentLikeDeleteError: null,
+    //get user
+    isGettingUser: false,
+    isUserGetted: false,
+    userData: {},
+    userDataError: null,
+    // follow
+    isFollowing: false,
+    FollowingSuccess: false,
+    FollowingError: null,
+    // unfollow
+    isUnFollowing: false,
+    unFollowingSuccess: false,
+    unFollowingError: null,
 }
 
 const postReducer = (state = initialState, action) => {
@@ -151,6 +181,55 @@ const postReducer = (state = initialState, action) => {
             case GET_POSTS_FAILURE:
                 draft.isGettingPosts = false;
                 draft.postsDataError = action.payload;
+                break;
+            case GET_USER_REQUEST:
+                draft.isGettingUser = true;
+                break;
+            case GET_USER_SUCCESS: {
+                draft.postsData = action.payload.Posts
+                draft.isGettingUser = false;
+                draft.isUserGetted = true;
+                draft.userData = action.payload
+                draft.userDataError = null;
+                break;
+            }
+            case FOLLOW_REQUEST:
+                draft.isFollowing = true;
+                break;
+            case FOLLOW_SUCCESS: {
+                draft.userData.Followers.unshift(action.payload);
+                draft.isFollowing = false;
+                draft.FollowingSuccess = true;
+                draft.FollowingError = null;
+                break;
+            }
+            case FOLLOW_FAILURE:
+                draft.isFollowing = false;
+                draft.FollowingError = action.payload;
+                break;
+            case UNFOLLOW_REQUEST:
+                draft.isUnFollowing = true;
+                break;
+            case UNFOLLOW_SUCCESS: {
+                const Followers = draft.userData.Followers.filter(follwer =>
+                    follwer.id !== parseInt(action.payload.id)
+                );
+                draft.userData.Followers = Followers;
+                draft.isUnFollowing = false;
+                draft.unFollowingSuccess = false;
+                draft.unFollowingError = null;
+                break;
+            }
+            case UNFOLLOW_FAILURE:
+                draft.isUnFollowing = false;
+                draft.unFollowingError = action.payload;
+                break;
+            case GET_USER_FAILURE:
+                draft.isGettingUser = false;
+                draft.userDataError = action.payload
+                break;
+            case GET_USER_INITIALIZE:
+                draft.userData = null;
                 break;
             case POST_UPLOAD_REQUEST:
                 draft.isPostUploading = true;
